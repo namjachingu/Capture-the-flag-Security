@@ -23,8 +23,9 @@ url = f"{inv_url}/domains/categorization/{domain}?showLabels"
 headers =  {"Authorization": f'Bearer {inv_token}'}
 response = requests.get(url, headers=headers)
 response.raise_for_status()
-#print(response)
 
+
+'''
 #Make sure the right data in the correct format is chosen, you can use print statements to debug your code
 domain_status = response.json()[domain]["status"]
 
@@ -37,26 +38,30 @@ elif domain_status == 0:
 
 print("This is how the response data from Umbrella Investigate looks like: \n")
 pprint(response.json(), indent=4)
+'''
 
-#Add another call here, where you check the historical data for either the domain from the intro or your own 
-#domain and print it out in a readable format
+#check the historical data
+url = f"https://investigate.api.umbrella.com/pdns/domain/{domain}"
+response = requests.get(url, headers=headers)
+#pprint(response.json(), indent=4)
 
-domain = "internetbadguys.com"
-
-#STAGE1
-#Any URL that is returned as malicious should be added to a block list through the Umbrella API.
-#He would like you to do that for any URL that would be inserted by the team in any fashion.
-
-#pprint(json.dumps(response.json, indent=2))
-#url = f"{inv_url}/domains/categorization/{domain}?showLabels"
-en_key = env.UMBRELLA.get("inv_url")
+### STAGE1 ###
+en_key = env.UMBRELLA.get("en_key")
 url = f"https://s-platform.api.opendns.com/1.0/events?customerKey={en_key}"
-header = {'Content-Type': 'application/json'}
+headers = {'Content-Type': 'application/json'}
 
-
+data = {
+    'protocolVersion': ,
+    'providerName': ,
+    'deviceId': ,
+    'deviceVersion': , 
+    'eventTime': ,
+    'alertTime': ,
+    'dstDomain': domain,
+    'dstUrl': , 
+    }
 
 if response.json()[domain]["status"] == -1:
-    response = requests.post(url, headers=header, data=response.json()[domain])
+    response = requests.post(url, data=json.dumps(data), headers=headers)
     print(response.json())
-
-
+    
