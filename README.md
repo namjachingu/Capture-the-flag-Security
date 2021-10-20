@@ -1,2 +1,2 @@
-# ctf-security
+# Capture the flag: Security
 Software Bootcamp for ASEs
